@@ -1,0 +1,145 @@
+.music-player {
+  position: relative;
+  background: #181818;
+  color: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  width: 400px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+.album-art {
+  width: 300px;
+  height: 300px;
+  margin: -24px auto 24px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+}
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.song-info {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.song-info h3 {
+  font-size: 24px;
+  margin: 0 0 8px;
+}
+
+.song-info p {
+  color: #b3b3b3;
+  margin: 0;
+}
+
+.progress-container {
+  margin: 20px 0;
+}
+
+.progress-bar {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: #535353;
+  border-radius: 2px;
+  margin: 8px 0;
+  cursor: pointer;
+}
+
+.progress-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #1db954;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.progress-bar:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+
+.time-display {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #b3b3b3;
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+.controls-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  padding: 8px;
+  transition: all 0.2s;
+}
+
+.control-btn:hover {
+  color: #1db954;
+  transform: scale(1.1);
+}
+
+.play-btn {
+  background: #1db954;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);
+}
+
+.play-btn:hover {
+  transform: scale(1.05);
+  background: #1ed760;
+}
+
+.controls-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.volume-slider {
+  -webkit-appearance: none;
+  width: 100px;
+  height: 4px;
+  background: #535353;
+  border-radius: 2px;
+}
+
+.volume-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: #1db954;
+  border-radius: 50%;
+}
+
+.volume-icon {
+  color: #b3b3b3;
+  font-size: 16px;
+}

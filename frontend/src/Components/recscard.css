@@ -1,0 +1,339 @@
+/* src/Components/recommendations.css */
+
+/* --- Page Container --- */
+.recommendations-page {
+  padding: 25px 30px;
+  color: #e0e0e0;
+  background-color: #121212;
+  min-height: calc(100vh - 70px); /* Adjust based on player bar */
+  box-sizing: border-box;
+}
+
+.recommendations-page h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #ffffff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 15px;
+}
+
+/* --- Grid Layout --- */
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Fixed typo and adjusted size */
+  gap: 20px; /* Slightly increased gap */
+  margin-bottom: 30px; /* Added bottom margin */
+}
+
+/* --- Loading & Error States --- */
+.page-loading, .page-error, .no-results-message {
+  grid-column: 1 / -1; /* Span full width */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 250px;
+  color: #a7a7a7;
+  font-size: 1rem;
+  text-align: center;
+  width: 100%;
+}
+.page-error { color: #ff8a80; }
+.page-loading .spinner {
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: #cccccc;
+    width: 35px;
+    height: 35px;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ========================================= */
+/* == Recommendation Card (Compact Grid) == */
+/* ========================================= */
+
+.recommendation-card {
+  background-color: #1f1f1f;
+  border-radius: 8px; /* Slightly increased radius */
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  transition: background-color 0.2s ease-out, transform 0.2s ease; /* Added transform */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Enhanced shadow */
+  height: 100%; /* Ensure cards fill grid cell height */
+  box-sizing: border-box;
+}
+
+.recommendation-card:hover {
+  background-color: #2a2a2a; /* Slightly lighter for better hover effect */
+  transform: translateY(-2px); /* Small lift effect on hover */
+}
+
+/* --- Image Area --- */
+.card-image-container {
+  position: relative;
+  width: 100%;
+  padding-bottom: 100%; /* Square aspect ratio */
+  margin-bottom: 12px; /* Slightly increased */
+  border-radius: 6px; /* Slightly increased radius */
+  overflow: hidden;
+  background-color: #252525; /* Slightly adjusted color */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Added subtle shadow */
+}
+
+.card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease; /* Added transition for hover effect */
+}
+
+.card-image-container:hover .card-image {
+  transform: scale(1.05); /* Subtle zoom on hover */
+}
+
+/* Play Button Overlay */
+.card-play-btn {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: #1DB954; /* Spotify Green */
+  color: #ffffff;
+  border: none;
+  border-radius: 50%;
+  width: 42px; /* Slightly larger */
+  height: 42px; /* Slightly larger */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Enhanced shadow */
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out, background-color 0.15s ease;
+  z-index: 2;
+}
+.card-image-container:hover .card-play-btn { /* Show on IMAGE container hover */
+  opacity: 1;
+  transform: translateY(0);
+}
+.card-play-btn:hover {
+  transform: scale(1.1); /* Slightly increased scale */
+  background-color: #1ed760;
+}
+.card-play-btn svg {
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+}
+
+/* --- Info Area --- */
+.card-info {
+  text-align: left;
+  flex-grow: 1; /* Takes available space */
+  margin-bottom: 10px; /* Increased slightly */
+  overflow: hidden;
+}
+
+.card-title {
+  display: block;
+  font-weight: 600; /* Increased font weight */
+  color: #ffffff;
+  font-size: 0.95rem; /* Slightly increased font size */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 5px; /* Increased slightly */
+  line-height: 1.3;
+}
+
+.card-artist {
+  display: block;
+  font-size: 0.85rem; /* Slightly increased font size */
+  color: #b3b3b3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* --- Controls Area --- */
+.card-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto; /* Pushes to bottom */
+  padding-top: 8px; /* Increased slightly */
+  border-top: 1px solid rgba(255, 255, 255, 0.05); /* Added subtle separator */
+}
+
+/* Container for More button + its menu */
+.more-options-container {
+    position: relative; /* Allows absolute positioning of the menu */
+}
+
+.control-btn {
+  background: none;
+  border: none;
+  color: #b3b3b3;
+  cursor: pointer;
+  padding: 6px; /* Increased padding */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, background-color 0.2s ease, transform 0.1s ease; /* Added transform */
+}
+.control-btn:hover {
+  color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1); /* Slight scale on hover */
+}
+.control-btn svg {
+  width: 18px; /* Slightly larger */
+  height: 18px; /* Slightly larger */
+}
+.control-btn.like-btn.liked { color: #1DB954; }
+.control-btn.like-btn.liked:hover { color: #1ed760; }
+
+
+/* --- Dropdown Menu --- */
+.card-dropdown-menu {
+  position: absolute;
+  bottom: calc(100% + 8px); /* Increased gap */
+  right: 0;
+  background-color: #282828;
+  border-radius: 6px; /* Increased radius */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6); /* Enhanced shadow */
+  z-index: 100;
+  min-width: 180px; /* Slightly wider */
+  padding: 6px 0;
+  overflow: visible;
+  opacity: 0;
+  transform: translateY(5px);
+  animation: fadeInMenu 0.15s ease-out forwards;
+  pointer-events: none; /* Initially not interactive */
+}
+.card-dropdown-menu.visible { /* Add this class when showMenu is true */
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto; /* Make interactive when visible */
+}
+
+@keyframes fadeInMenu {
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Menu Items */
+.menu-item, .submenu-trigger, .submenu-item {
+    display: flex; align-items: center; gap: 10px; /* Increased gap */
+    background: none; border: none; color: #e0e0e0;
+    padding: 10px 14px; /* Increased padding */
+    text-align: left; width: 100%; cursor: pointer;
+    font-size: 0.9rem; /* Increased font size */
+    transition: background-color 0.2s ease; 
+    white-space: nowrap;
+}
+.menu-item:hover, .submenu-trigger:hover, .submenu-item:hover {
+    background-color: #3e3e3e; color: #ffffff;
+}
+.menu-item svg { width: 16px; height: 16px; opacity: 0.8; } /* Slightly larger icons */
+.menu-separator { height: 1px; background-color: #454545; margin: 5px 0; } /* Increased margin */
+.submenu-trigger { justify-content: space-between; }
+.submenu-arrow { font-size: 0.8em; opacity: 0.7; } /* Slightly larger arrow */
+.card-submenu { border-top: 1px solid #454545; margin-top: 5px; padding-top: 5px; max-height: 150px; overflow-y: auto; } /* Increased height */
+.submenu-item { font-size: 0.85rem; padding: 8px 14px; color: #c0c0c0; } /* Increased padding and font size */
+.submenu-loading, .submenu-empty { padding: 10px 14px; font-size: 0.85rem; color: #888; font-style: italic; } /* Increased padding */
+
+/* Add media queries for responsive behavior */
+@media (max-width: 1200px) {
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+  }
+  
+  .recommendations-page {
+    padding: 20px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .recommendations-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+  }
+  
+  .card-title {
+    font-size: 0.85rem;
+  }
+  
+  .card-artist {
+    font-size: 0.75rem;
+  }
+}
+
+/* --- Back Button Style --- */
+.back-to-dashboard-btn {
+  display: inline-flex; /* Use inline-flex for icon alignment */
+  align-items: center;
+  gap: 6px; /* Space between icon and text */
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background */
+  color: #ccc;
+  border: none;
+  border-radius: 20px; /* Pill shape */
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  margin-bottom: 20px; /* Space below button */
+  position: absolute; /* Position relative to page padding */
+  top: 25px; /* Align with top padding */
+  left: 30px; /* Align with left padding */
+}
+
+.back-to-dashboard-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.back-to-dashboard-btn svg {
+  margin-bottom: -1px; /* Fine-tune icon alignment */
+}
+
+/* Adjust page padding if using absolute positioning for button */
+.recommendations-page {
+  padding: 70px 30px 30px 30px; /* Increased top padding */
+  position: relative; /* Needed for absolute positioning of children */
+  color: #e0e0e0;
+  background-color: #121212;
+  min-height: calc(100vh - 70px);
+  box-sizing: border-box;
+}
+
+.recommendations-page h1 {
+  margin-top: 0; /* Remove default margin if button is above */
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 25px;
+  color: #ffffff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 15px;
+}
+
+
+/* ... rest of your CSS ... */

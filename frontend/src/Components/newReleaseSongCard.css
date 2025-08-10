@@ -1,0 +1,314 @@
+/* src/Components/NewReleaseSongCard.css */
+
+.new-release-song-card {
+  background-color: #181818; /* Slightly darker background */
+  border-radius: 8px;
+  padding: 16px; /* Adjusted padding */
+  transition: background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure cards in a grid row take full height */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+.new-release-song-card:hover {
+  background-color: #282828;
+}
+
+.new-release-song-card:hover .nr-play-button {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1); /* Correct transform on hover */
+}
+
+.new-release-song-card:hover .nr-menu-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* --- Image Container --- */
+.nr-card-image-container {
+  position: relative;
+  margin-bottom: 16px; /* Space below image */
+  padding-top: 100%; /* Creates a square aspect ratio box */
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+}
+
+.nr-card-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.3s ease; /* Smooth zoom effect on card hover */
+}
+
+.new-release-song-card:hover .nr-card-image {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* --- Overlay --- */
+.nr-card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.4), transparent 60%); /* Gradient overlay */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none; /* Let clicks pass through unless hitting a button */
+}
+
+.new-release-song-card:hover .nr-card-overlay {
+  opacity: 1;
+}
+
+/* --- Play Button --- */
+.nr-play-button {
+  background-color: #1DB954; /* Spotify green */
+  color: #000000; /* Black icon for contrast */
+  border: none;
+  border-radius: 50%;
+  width: 50px; /* Slightly larger */
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: absolute;
+  /* Centered positioning */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%) scale(0.9); /* Adjust vertical start, start slightly smaller */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  opacity: 0; /* Hidden by default */
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  z-index: 10;
+  pointer-events: auto; /* Make play button clickable */
+}
+
+.nr-play-button:hover {
+  transform: translate(-50%, -40%) scale(1.05); /* Scale up more on hover */
+  background-color: #1ED760;
+}
+
+.nr-play-button svg {
+  width: 24px; /* Ensure icon size is consistent */
+  height: 24px;
+  /* fill: #000000; */ /* Defined inline for Play */
+}
+
+/* --- Options Menu Container & Button --- */
+.nr-options-container {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 20;
+}
+
+.nr-menu-button {
+  background: rgba(0, 0, 0, 0.6); /* Darker background */
+  color: #ffffff; /* White icon */
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, transform 0.2s ease;
+  opacity: 0; /* Hidden until card hover */
+  pointer-events: none; /* Not clickable until card hover */
+}
+
+.nr-menu-button:hover {
+  background: rgba(0, 0, 0, 0.9);
+  transform: scale(1.1);
+}
+
+/* --- Dropdown Menu --- */
+.nr-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 5px); /* Position below the button */
+  right: 0;
+  background-color: #282828;
+  border-radius: 4px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.6);
+  min-width: 220px; /* Wider menu */
+  padding: 5px 0;
+  z-index: 30;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  animation: fadeInDropdown 0.2s ease-out; /* Add fade-in animation */
+}
+
+@keyframes fadeInDropdown {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nr-menu-item,
+.nr-submenu-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 15px;
+  background: none;
+  border: none;
+  color: #e0e0e0; /* Lighter text color */
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.nr-menu-item:hover {
+  background-color: #3e3e3e;
+  color: #fff;
+}
+/* Don't apply hover to header */
+.nr-submenu-header:hover {
+  background-color: transparent;
+  color: #eee;
+}
+
+.nr-menu-item:disabled {
+  color: #555;
+  cursor: not-allowed;
+  background-color: transparent !important; /* Ensure no hover bg */
+}
+
+.nr-menu-icon {
+  flex-shrink: 0;
+  color: #b3b3b3; /* Default icon color */
+}
+.nr-menu-item:hover .nr-menu-icon {
+  color: #fff; /* Icon color on hover */
+}
+
+/* --- Submenu Styling --- */
+.nr-submenu {
+  border-top: 1px solid #444;
+  margin-top: 5px;
+  padding-top: 5px;
+}
+
+.nr-submenu-header {
+  font-weight: 600;
+  color: #eee;
+  cursor: default;
+  padding-bottom: 5px; /* Space below header */
+}
+
+.nr-submenu-content {
+  max-height: 180px; /* Allow more items */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #555 #282828;
+}
+.nr-submenu-content::-webkit-scrollbar { width: 8px; }
+.nr-submenu-content::-webkit-scrollbar-track { background: #282828; border-radius: 4px; }
+.nr-submenu-content::-webkit-scrollbar-thumb { background-color: #555; border-radius: 4px; border: 2px solid #282828; }
+
+.nr-playlist-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 15px; /* Adjust padding */
+  background: none;
+  border: none;
+  color: #e0e0e0; /* Lighter text */
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.9rem; /* Match menu item */
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.nr-playlist-button:hover {
+  background-color: #3e3e3e;
+  color: #fff;
+}
+
+.nr-playlist-button:disabled {
+  color: #666;
+  cursor: default;
+  background-color: transparent !important; /* Ensure no hover bg when disabled */
+}
+.nr-playlist-button:disabled .nr-playlist-name {
+  color: #666; /* Ensure text is also greyed out */
+}
+
+.nr-playlist-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex-grow: 1;
+  margin-right: 10px;
+  transition: color 0.2s; /* Smooth color transition */
+}
+
+.nr-added-icon {
+  color: #1DB954;
+  flex-shrink: 0;
+  animation: popInCheck 0.3s ease-out; /* Add pop animation */
+}
+
+@keyframes popInCheck {
+0% { transform: scale(0.5); opacity: 0; }
+70% { transform: scale(1.1); opacity: 1; }
+100% { transform: scale(1); }
+}
+
+
+.nr-loading-msg,
+.nr-no-playlists-msg {
+  display: block;
+  padding: 10px 15px;
+  font-size: 0.85rem;
+  color: #888;
+  font-style: italic;
+  text-align: center;
+}
+
+
+/* --- Info Section --- */
+.nr-card-info {
+  margin-top: auto; /* Push info to bottom */
+  padding-top: 12px; /* Space above text */
+}
+
+.nr-title {
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3; /* Allow slightly taller for long words */
+  margin-bottom: 4px;
+  /* Allow wrapping up to 2 lines */
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit to 2 lines */
+  -webkit-box-orient: vertical;
+  min-height: 2.6em; /* Reserve space for 2 lines */
+}
+
+.nr-artist {
+  color: #b3b3b3;
+  font-size: 0.875rem; /* Slightly larger artist text */
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

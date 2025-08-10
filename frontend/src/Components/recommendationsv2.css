@@ -1,0 +1,528 @@
+/* RecommendationsV2.css */
+
+:root {
+  --primary-color: #1db954; /* Spotify Green */
+  --primary-color-hover: #1ed760;
+  --background-color: #121212; /* Dark background */
+  --card-background: #181818;
+  --secondary-text: #b3b3b3;
+  --primary-text: #ffffff;
+  --border-color: #282828;
+  --hover-background: #282828;
+  --button-background: var(--primary-color);
+  --button-text: #ffffff; /* Ensure high contrast */
+  --input-background: #282828; /* Slightly lighter than card */
+  --error-color: #f44336;
+  --placeholder-color: #535353;
+}
+
+/* Base Page Styles */
+.recommendations-page-v2 {
+  padding: 20px clamp(15px, 5vw, 40px); /* Responsive padding */
+  background-color: var(--background-color);
+  color: var(--primary-text);
+  min-height: 100vh;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; /* Common UI font stack */
+}
+
+/* Header Styles */
+.rec-header-v2 {
+  margin-bottom: 35px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.rec-header-v2 h1 {
+  font-size: clamp(1.8rem, 5vw, 2.5rem); /* Responsive font size */
+  margin: 10px 0 5px 0;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.rec-header-v2 p {
+  color: var(--secondary-text);
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
+  max-width: 600px; /* Prevent subtitle from becoming too wide */
+}
+
+.rec-back-btn-v2 {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--secondary-text);
+  text-decoration: none;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.rec-back-btn-v2:hover {
+  color: var(--primary-text);
+}
+
+/* Grid Container for Recommendation Boxes */
+.rec-boxes-container {
+  display: grid;
+  /* More robust responsive grid: start with 1 column, go to 2 */
+  grid-template-columns: 1fr;
+  gap: 25px;
+}
+
+/* Media query for two columns on wider screens */
+@media (min-width: 800px) {
+  .rec-boxes-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+
+/* Individual Recommendation Box Styling */
+.rec-box {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 20px 25px;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  min-height: 300px; /* Ensure boxes have a decent minimum height */
+}
+
+.rec-box:hover {
+    /* Subtle background change on hover */
+    background-color: var(--hover-background);
+}
+
+.rec-box-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+  color: var(--primary-text);
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.rec-box-header h3 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.rec-box-content {
+  margin-bottom: 20px;
+}
+
+.rec-box-description {
+    font-size: 0.9rem;
+    color: var(--secondary-text);
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+/* Input Group Styling */
+.rec-input-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap; /* Allow wrapping */
+}
+
+.rec-input {
+    flex: 1 1 180px; /* Allow shrinking and growing, base width 180px */
+    padding: 12px 14px;
+    background-color: var(--input-background);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    color: var(--primary-text);
+    font-size: 0.95rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.rec-input::placeholder {
+    color: var(--secondary-text);
+    opacity: 0.8;
+}
+.rec-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(29, 185, 84, 0.3);
+}
+
+
+/* Button Styling (Fetch & Retry) */
+.rec-fetch-button, .rec-retry-btn {
+    padding: 10px 18px;
+    background-color: var(--button-background);
+    color: var(--button-text);
+    border: none;
+    border-radius: 50px; /* Fully rounded pill shape */
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700; /* Bold button text */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center; /* Center content */
+    gap: 6px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    white-space: nowrap;
+    line-height: 1.2; /* Ensure text vertically aligns well */
+    flex-shrink: 0; /* Prevent button from shrinking too much */
+}
+.rec-retry-btn {
+    background-color: var(--secondary-text);
+    color: var(--background-color);
+    margin-left: 10px; /* Space it out in error message */
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.rec-fetch-button:hover:not(:disabled) {
+    background-color: var(--primary-color-hover);
+    transform: scale(1.03);
+}
+.rec-retry-btn:hover {
+     background-color: lighten(var(--secondary-text), 10%);
+     transform: scale(1.03);
+}
+
+.rec-fetch-button:disabled {
+    background-color: var(--placeholder-color); /* More distinct disabled state */
+    cursor: not-allowed;
+    transform: none;
+    opacity: 0.7;
+}
+
+
+/* Mood Buttons */
+.rec-mood-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.rec-mood-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  background-color: transparent;
+  color: var(--secondary-text);
+  border-radius: 50px; /* Pill shape */
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  display: inline-flex; /* Align icon and text */
+  align-items: center;
+  gap: 6px;
+}
+
+.rec-mood-btn:hover:not(.selected):not(:disabled) {
+  border-color: var(--primary-text);
+  color: var(--primary-text);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.rec-mood-btn.selected {
+  background-color: var(--primary-color);
+  color: var(--button-text);
+  border-color: var(--primary-color);
+  font-weight: 700;
+}
+.rec-mood-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+     background-color: transparent !important; /* Ensure background doesn't stick when disabled */
+     color: var(--placeholder-color) !important;
+     border-color: var(--border-color) !important;
+}
+
+
+/* Results Area Styling */
+.rec-box-results {
+  margin-top: auto; /* Pushes results to the bottom */
+  padding-top: 15px; /* Space above results grid */
+  /* min-height: 150px; Give it minimum space for messages */
+  flex-grow: 1; /* Allow results area to take remaining space */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Loader, Error, No Results Messages */
+.rec-box-loader, .rec-box-error, .rec-no-results, .rec-placeholder-text {
+  display: flex;
+  flex-direction: column; /* Stack icon/text vertically */
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  color: var(--secondary-text);
+  font-size: 0.95rem;
+  text-align: center;
+  padding: 20px 10px;
+  flex-grow: 1; /* Allow message to fill the results area */
+  border-radius: 4px;
+}
+
+.rec-box-loader {
+    /* Loader already has icon/text */
+}
+
+.rec-box-error {
+  color: var(--error-color);
+  background-color: rgba(244, 67, 54, 0.1); /* Subtle red background */
+  border: 1px solid rgba(244, 67, 54, 0.3);
+}
+.rec-box-error span {
+    font-weight: 500;
+}
+
+.rec-no-results {
+    /* Style as needed */
+}
+
+/* Placeholder Specific Styles */
+.rec-placeholder-text {
+    font-style: italic;
+    border: 1px dashed var(--border-color);
+    background-color: rgba(0, 0, 0, 0.1);
+}
+.rec-placeholder-text p { margin-bottom: 5px; }
+.rec-placeholder-text small { font-size: 0.8rem; opacity: 0.8; }
+
+
+/* Animation for Loader */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.spin {
+  animation: spin 1s linear infinite;
+}
+
+
+/* Grid for displaying result tracks */
+.rec-tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* Adjust minmax for desired card size */
+  gap: 18px; /* Slightly larger gap */
+  width: 100%; /* Ensure grid takes full width */
+}
+
+
+/* Song Card V2 Styling */
+.rec-song-card-v2 {
+  background-color: var(--card-background); /* Match box bg */
+  border-radius: 6px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+.rec-song-card-v2:hover {
+    background-color: var(--hover-background); /* Consistent hover */
+}
+
+.rec-song-image-v2 {
+  position: relative;
+  padding-bottom: 100%; /* Aspect ratio 1:1 */
+  background-color: #333; /* Dark placeholder */
+  border-radius: 4px; /* Slightly rounded corners for image */
+  overflow: hidden;
+  margin: 8px 8px 0; /* Add padding around image */
+}
+
+.rec-song-image-v2 img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease; /* Subtle zoom on hover */
+}
+.rec-song-card-v2:hover .rec-song-image-v2 img {
+    transform: scale(1.05);
+}
+
+/* Overlay and Play Button */
+.rec-song-overlay-v2 {
+  position: absolute;
+  bottom: 5px; /* Position play button lower right */
+  right: 5px;
+  opacity: 0;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: translateY(10px); /* Start slightly down */
+}
+.rec-song-card-v2:hover .rec-song-overlay-v2 {
+  opacity: 1;
+   transform: translateY(0);
+}
+
+.rec-play-btn-v2 {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+.rec-play-btn-v2:hover {
+    transform: scale(1.1);
+    background-color: var(--primary-color-hover);
+}
+.rec-play-btn-v2 svg {
+    margin-left: 2px; /* Adjust icon position if needed */
+}
+
+
+/* Song Info Text */
+.rec-song-info-v2 {
+  padding: 12px 10px; /* Adjust padding */
+  position: relative;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Vertically center text if space allows */
+}
+
+.rec-song-title-v2 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 4px 0;
+  color: var(--primary-text);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.rec-song-artist-v2 {
+  font-size: 0.8rem;
+  color: var(--secondary-text);
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+/* Like Button */
+.rec-like-btn-v2 {
+  position: absolute;
+  top: 8px; /* Position top right */
+  right: 8px;
+  background: none;
+  border: none;
+  color: var(--secondary-text);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 50%;
+  opacity: 0; /* Hide initially */
+  transition: color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease;
+}
+/* Show like button on card hover */
+.rec-song-card-v2:hover .rec-like-btn-v2 {
+    opacity: 0.7;
+}
+.rec-like-btn-v2:hover {
+  color: var(--primary-text);
+  opacity: 1;
+  background-color: rgba(255, 255, 255, 0.1); /* Subtle background on hover */
+}
+.rec-like-btn-v2.liked {
+    color: var(--primary-color);
+    opacity: 1; /* Ensure liked state is always visible on hover */
+}
+/* Keep liked button visible if card is hovered */
+.rec-song-card-v2:hover .rec-like-btn-v2.liked {
+    opacity: 1;
+}
+
+
+/* Final Responsive Adjustments */
+@media (max-width: 600px) {
+     .rec-header-v2 h1 { font-size: 1.6rem; }
+     .rec-header-v2 p { font-size: 0.85rem; }
+     .rec-box { padding: 15px 20px; min-height: 280px; }
+     .rec-box-header h3 { font-size: 1.15rem;}
+     .rec-input-group { flex-direction: column; } /* Stack inputs on small screens */
+     .rec-fetch-button { width: 100%; } /* Full width button */
+     .rec-tracks-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); /* Smaller cards */
+        gap: 12px;
+    }
+    .rec-song-title-v2 { font-size: 0.8rem; }
+    .rec-song-artist-v2 { font-size: 0.75rem; }
+    .rec-play-btn-v2 { width: 32px; height: 32px; }
+    .rec-play-btn-v2 svg { width: 14px; height: 14px;}
+    .rec-like-btn-v2 svg { width: 14px; height: 14px;}
+}
+
+
+/* --- NEW STYLES for Similar Artist Controls --- */
+
+.rec-similar-artist-controls {
+  margin-top: 15px; /* Space above the controls */
+  padding-top: 15px;
+  border-top: 1px solid var(--border-color); /* Separator line */
+  display: flex;
+  flex-direction: column; /* Stack text and button */
+  align-items: flex-start; /* Align items to the start */
+  gap: 10px;
+}
+
+.rec-current-similar-artist {
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+  margin: 0;
+}
+
+.rec-current-similar-artist strong {
+  color: var(--primary-text);
+  font-weight: 600;
+}
+
+.rec-change-artist-btn {
+  /* Style similarly to show tags button or fetch button */
+  background-color: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--secondary-text);
+  padding: 8px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.rec-change-artist-btn:hover:not(:disabled) {
+  color: var(--primary-text);
+  border-color: var(--secondary-text);
+  background-color: var(--hover-background);
+}
+
+.rec-change-artist-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Make the loading icon spin if needed */
+.rec-change-artist-btn svg {
+  transition: transform 0.3s ease;
+}
+.rec-change-artist-btn:disabled svg {
+ /* Optional: Add spin animation if loading */
+ /* animation: spin 1s linear infinite; */
+}

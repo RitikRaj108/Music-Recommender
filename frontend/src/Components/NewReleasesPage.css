@@ -1,0 +1,143 @@
+/* src/pages/NewReleases/NewReleasesPage.css */
+
+/* Inherit padding/max-width etc. from .main-content if possible */
+.new-releases-page-container {
+  padding-bottom: 100px; /* Ensure space above player bar */
+}
+
+.new-releases-page-container h1 {
+  margin-bottom: 8px;
+  color: #ffffff; /* White heading */
+  font-size: 2.2rem; /* Larger heading */
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.new-releases-page-container p {
+  margin-bottom: 30px; /* More space below paragraph */
+  color: #b3b3b3; /* Spotify grey text */
+  font-size: 1rem;
+}
+
+.back-button {
+  display: inline-flex; /* Align icon and text nicely */
+  align-items: center;
+  gap: 6px; /* Space between icon and text */
+  background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
+  border: none; /* No border */
+  color: #ffffff; /* White text */
+  padding: 8px 16px;
+  border-radius: 50px; /* Pill shape */
+  cursor: pointer;
+  margin-bottom: 25px;
+  font-size: 0.9em;
+  font-weight: 600;
+  transition: background-color 0.2s ease;
+}
+.back-button svg { /* Style the arrow icon */
+  width: 16px;
+  height: 16px;
+  stroke-width: 2.5px;
+}
+
+.back-button:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Grid layout for the new cards */
+.new-releases-grid {
+  display: grid;
+  /* Responsive grid columns */
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); /* Default min size */
+  gap: 24px; /* Standard Spotify gap */
+  margin-top: 20px;
+}
+
+/* Adjust grid for different screen sizes */
+@media (min-width: 600px) {
+  .new-releases-grid {
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .new-releases-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
+@media (min-width: 1200px) {
+  .new-releases-grid {
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 28px; /* Slightly larger gap on large screens */
+  }
+}
+
+
+/* --- Loading/Error/Info Containers --- */
+/* Reuse .loading-container or define specific styles */
+.loading-container {
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+min-height: 300px; /* Ensure it takes some space */
+color: #b3b3b3;
+}
+.loading-container .spinner {
+/* Assuming you have a spinner defined elsewhere */
+width: 50px;
+height: 50px;
+border: 4px solid rgba(255, 255, 255, 0.2);
+border-top-color: #ffffff;
+border-radius: 50%;
+animation: spin 1s linear infinite;
+margin-bottom: 15px;
+}
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+.error-container, .info-container {
+background-color: rgba(0, 0, 0, 0.2); /* Darker info box */
+border: 1px solid rgba(255, 255, 255, 0.1);
+color: #ccc; /* Lighter text for info */
+padding: 20px;
+border-radius: 8px;
+margin: 30px auto; /* Center it */
+max-width: 600px;
+text-align: center;
+}
+.error-container { /* Specific styles for error */
+  background-color: rgba(220, 53, 69, 0.1); /* Faint red bg */
+  border-color: rgba(220, 53, 69, 0.4);
+  color: #f8d7da; /* Light red text */
+}
+.error-container p {
+  margin-bottom: 15px; /* Space before button */
+  color: inherit; /* Inherit color from container */
+}
+
+.retry-btn {
+  background-color: #ffffff; /* White button */
+  color: #121212; /* Black text */
+  border: none;
+  padding: 10px 20px;
+  border-radius: 50px; /* Pill shape */
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: transform 0.1s ease, background-color 0.2s ease;
+  display: inline-block; /* Needed for centering if text-align: center */
+}
+.retry-btn:hover {
+  background-color: #f0f0f0;
+  transform: scale(1.03);
+}
+.error-container .retry-btn {
+  background-color: #dc3545; /* Red button for error */
+  color: #ffffff;
+}
+.error-container .retry-btn:hover {
+   background-color: #c82333; /* Darker red on hover */
+}
