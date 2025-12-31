@@ -1,4 +1,3 @@
-Recommender-pro
 Recommender-pro is a full-stack music exploration platform that leverages machine learning to provide personalized song recommendations. By integrating with the Spotify API, it allows users to discover new music based on their existing library and preferences.
 
 🚀 Tech Stack
